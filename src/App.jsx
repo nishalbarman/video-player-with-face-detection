@@ -4,6 +4,7 @@ import { fabric } from "fabric";
 import "./App.css";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isModelsReady, setIsModelsReady] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [videoSource, setVideoSource] = useState(
@@ -37,6 +38,7 @@ function App() {
       faceapi.nets.faceExpressionNet.loadFromUri("/models"),
     ])
       .then(() => {
+        setIsLoading(false);
         setIsModelsReady(true);
       })
       .catch((er) => {
@@ -140,6 +142,13 @@ function App() {
 
   return (
     <>
+      {isLoading ? (
+        <span className="text-center w-[100%] font-bold text-xl">
+          Loading ...
+        </span>
+      ) : (
+        <></>
+      )}
       <div className="flex flex-col gap-2 items-center m-5">
         {isModelsReady ? (
           <div className="flex items-center justify-center w-[90%] ">
